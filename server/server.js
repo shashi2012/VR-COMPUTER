@@ -35,7 +35,9 @@ app.use(express.json());
 // CORS Configuration
 // ----------------------
 const allowedOrigins = [
-  "https://vr-computer.vercel.app"
+  "https://vr-computer.vercel.app",
+  "https://vr-computer-a68o7uk3h-shashi2012s-projects.vercel.app",
+  "http://localhost:5173"
 ];
 
 app.use(cors({
