@@ -29,15 +29,15 @@ const AboutPage = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans selection:bg-blue-100">
-      
+
       {/* 1. HERO SECTION */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-slate-950">
-        <div className="absolute inset-0 opacity-40">
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-slate-500">
+        <div className="absolute inset-0 opacity-90">
           <img src={repairWork} className="w-full h-full object-cover" alt="Background" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/80 to-slate-950" />
         </div>
         <div className="relative z-10 text-center px-6 max-w-5xl">
-          <motion.h1 
+          <motion.h1
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             className="text-6xl md:text-9xl font-black mb-6 tracking-tighter"
@@ -46,7 +46,7 @@ const AboutPage = () => {
               VR COMPUTER
             </span>
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -73,7 +73,7 @@ const AboutPage = () => {
       <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
+
             <motion.div {...fadeInUp} className="space-y-8">
               <div>
                 <h2 className="text-blue-600 font-black text-xs uppercase tracking-[0.3em] mb-4">Who We Are</h2>
@@ -81,10 +81,10 @@ const AboutPage = () => {
                   The One-Stop Hub for Patna's Digital Life.
                 </h3>
               </div>
-              
+
               <div className="space-y-6 text-slate-600 font-medium leading-relaxed text-lg">
                 <p>
-                  Established in the year **2020**, V R Computer in Lodipur, Patna, has emerged as a powerhouse in the Laptop Repair & Services industry. We serve as a critical destination for both local residents and clients from across Bihar seeking specialized hardware intervention.
+                  Established in the year <span className='bold'>2020</span>, V R Computer in Lodipur, Patna, has emerged as a powerhouse in the Laptop Repair & Services industry. We serve as a critical destination for both local residents and clients from across Bihar seeking specialized hardware intervention.
                 </p>
                 <p>
                   Our establishment is built on the belief that customer satisfaction is as vital as the technical precision of our repairs. This philosophy has helped us garner a loyal customer base that continues to grow daily.
@@ -106,8 +106,8 @@ const AboutPage = () => {
               </div>
             </motion.div>
 
-            <motion.div 
-              {...fadeInUp} 
+            <motion.div
+              {...fadeInUp}
               transition={{ delay: 0.2 }}
               className="relative p-4 bg-slate-100 rounded-[3rem]"
             >
@@ -213,15 +213,23 @@ const AboutPage = () => {
                 </div>
               </div>
             </div>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">
+            <button
+              onClick={() =>
+                window.open(
+                  "https://www.google.com/maps/place/VR+COMPUTER/@25.6103307,85.1370105,17z",
+                  "_blank"
+                )
+              }
+              className="bg-blue-600 text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all"
+            >
               Open in Maps
             </button>
           </div>
           <div className="lg:col-span-3 h-[350px] lg:h-auto">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3597.83703972522!2d85.13701057456866!3d25.610330777447324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed590f09173231%3A0x5a7c94b854c1bf4e!2sVR%20COMPUTER!5e0!3m2!1sen!2sin!4v1774172984835!5m2!1sen!2sin" 
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3597.83703972522!2d85.13701057456866!3d25.610330777447324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed590f09173231%3A0x5a7c94b854c1bf4e!2sVR%20COMPUTER!5e0!3m2!1sen!2sin!4v1774172984835!5m2!1sen!2sin"
               className="w-full h-full grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-1000"
-              allowFullScreen="" 
+              allowFullScreen=""
               loading="lazy"
             />
           </div>
