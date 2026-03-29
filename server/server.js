@@ -10,15 +10,27 @@ import { clerkMiddleware } from '@clerk/express';
 import { protect } from './middlware/authMiddleware.js';
 const app = express();
 app.use(clerkMiddleware()); 
+connectDB();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://vr-computer.vercel.app"
+];
 
 app.use(cors({
-  origin: true, // Allow requests from this origin
-  credentials: true, // Allow cookies to be sent with requests
-  allowedHeaders: ["Content-Type", "Authorization"] // Essential!
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 // Connect to the database
-connectDB();
+
 
 
 app.use(express.json());
