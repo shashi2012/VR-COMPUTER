@@ -13,7 +13,7 @@ app.use(clerkMiddleware());
 connectDB();
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  
   "https://vr-computer.vercel.app"
 ];
 
