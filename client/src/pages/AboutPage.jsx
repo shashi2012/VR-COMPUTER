@@ -44,6 +44,9 @@ const AboutPage = () => {
           >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-100 to-blue-500">
               VR COMPUTER
+              <h1 className="seo-hidden">
+                VR Computer Laptop & MacBook Repair in Patna
+              </h1>
             </span>
           </motion.h1>
           <motion.p
