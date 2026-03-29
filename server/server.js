@@ -12,7 +12,7 @@ const app = express();
 app.use(clerkMiddleware()); 
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: true, // Allow requests from this origin
   credentials: true, // Allow cookies to be sent with requests
   allowedHeaders: ["Content-Type", "Authorization"] // Essential!
 }));
