@@ -1,4 +1,4 @@
-import Repair from "../models/Repair.js";
+import Repair from "../models/repair.js";
 
 /**
  * @desc Get admin dashboard stats
