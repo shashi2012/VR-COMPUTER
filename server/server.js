@@ -14,26 +14,15 @@ import { protect } from './middlware/authMiddleware.js';
 
 const app = express();
 
-// ----------------------
-// Connect to MongoDB
-// ----------------------
-connectDB()
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
+// 1. Database Connection
+connectDB();
 
 // ----------------------
-// Middleware
+// 2. GLOBAL MIDDLEWARE (ORDER IS CRITICAL)
 // ----------------------
 
-// Clerk middleware
-app.use(clerkMiddleware());
-
-// Body parser
-app.use(express.json());
-
-// ----------------------
-// CORS Configuration
-// ----------------------
+// FIX 1: CORS MUST be first. If it's after Clerk or Body Parser, 
+// browser preflight (OPTIONS) requests might fail before headers are set.
 const allowedOrigins = [
   "https://vr-computer.vercel.app",
   "https://vr-computer-a68o7uk3h-shashi2012s-projects.vercel.app",
@@ -42,12 +31,10 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow no-origin (Postman, mobile apps) or allowed frontend
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.warn("Blocked by CORS:", origin);
-      callback(null, false);
+      callback(new Error("Blocked by CORS"));
     }
   },
   credentials: true,
@@ -55,44 +42,40 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// ✅ Handle preflight requests (IMPORTANT FIX)
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+// FIX 2: Body parser must be before Clerk/Routes
+app.use(express.json());
+
+// FIX 3: Clerk Middleware handles the initial token verification.
+// It MUST run before your custom 'protect' middleware.
+app.use(clerkMiddleware());
 
 // ----------------------
-// Routes
+// 3. ROUTES
 // ----------------------
 
-// Health check
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+app.get("/", (req, res) => res.send("API is running..."));
 
-// API routes
-app.use('/api/users', protect, userRoutes);
+/** * FIX 4: Remove 'protect' from the .use() mounting.
+ * Why? If you put 'protect' here AND inside the route files, 
+ * it runs twice. If it runs here, it applies to EVERY sub-route,
+ * which can cause issues if some routes (like a public profile) 
+ * don't actually need it.
+ * * Recommendation: Keep 'protect' INSIDE your router files.
+ */
+app.use('/api/users', userRoutes); 
 app.use('/api/repairs', repairRoutes);
-app.use('/api/admin', protect, adminRoutes);
+app.use('/api/admin', adminRoutes); 
 
 // ----------------------
-// Error Handler
+// 4. ERROR HANDLING
 // ----------------------
 app.use((err, req, res, next) => {
-  console.error("Error:", err.message);
-  res.status(500).json({
+  console.error("🔥 Server Error:", err.stack);
+  res.status(err.status || 500).json({
     success: false,
-    message: err.message || "Server Error"
+    message: err.message || "Internal Server Error"
   });
 });
 
-// ----------------------
-// Start Server
-// ----------------------
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
