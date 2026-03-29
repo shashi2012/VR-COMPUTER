@@ -40,6 +40,6 @@ const repairSchema = new mongoose.Schema({
     timestamps: true
 });
 
-export default mongoose.model('Repair', repairSchema);
+export default mongoose.models.Repair || mongoose.model("Repair", repairSchema);
 
     

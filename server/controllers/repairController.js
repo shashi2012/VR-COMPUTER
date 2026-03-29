@@ -1,4 +1,4 @@
-import Repair from "../models/Repair.js";
+import Repair from "../models/repair.js";
 import cloudinary from "../config/cloudinary.js";
 
 /**
